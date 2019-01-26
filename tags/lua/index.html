@@ -351,8 +351,7 @@
                 <span>lua中面向对象</span>
         </a>
         <div class="abstract-content">
-            pil实现方法要点：self语法糖、setmatetable元表、index方法提到了如何用__index方法来实现类和继承，让lua也具备面向对象的特性
-Account.lua123456789101112module("Account", package.seeall)function Account:new(o)    o = o or &#123;&#125;    setmetatable(o, self)    self.__index = self    return oendfunction Account:deposit()	print("account deposit...
+            pil实现方法要点：self语法糖、setmatetable元表、index方法提到了如何用__index方法来实现类和继承，让lua也具备面向对象的特性...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->

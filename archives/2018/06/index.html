@@ -351,8 +351,7 @@
                 <span>lua中面向对象</span>
         </a>
         <div class="abstract-content">
-            pil实现方法要点：self语法糖、setmatetable元表、index方法提到了如何用__index方法来实现类和继承，让lua也具备面向对象的特性
-Account.lua123456789101112module("Account", package.seeall)function Account:new(o)    o = o or &#123;&#125;    setmetatable(o, self)    self.__index = self    return oendfunction Account:deposit()	print("account deposit...
+            pil实现方法要点：self语法糖、setmatetable元表、index方法提到了如何用__index方法来实现类和继承，让lua也具备面向对象的特性...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -381,11 +380,7 @@ Account.lua123456789101112module("Account", package.seeall)function Account:new(
                 <span>ksum问题</span>
         </a>
         <div class="abstract-content">
-            问题1234567Given array nums = [-1, 0, 1, 2, -1, -4],    A solution set is:  [  [-1, 0, 1],  [-1, -1, 2]  ]
-解决方案此前还有2sum问题，那么可以把这个问题扩展为k-sum对于找出3个数，我们可以先固定一个数，在剩下的数里面去找到两个，那么复杂度就是n^2，这太高了，有没有可能不用暴力解决。答案是肯定的，因为最终的和是知道的，那么我们固定了一个数，就可以根据其他两个数来判断是如何移动，达到线性搜索。前提是排好序
-同理 4sum可以固定两个数，再去找剩余的两个数…
-代码
-
+            问题1234567Given array nums = [-1, 0, 1, 2, -1, -4],    A solution set is:  [  ...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->

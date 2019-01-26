@@ -356,12 +356,7 @@
 广度搜索都是一条笔直的线  
 A* 则是曲曲折折   
 
-猜想在遍历一个点的4个方向的时候，如果最小分数有多个点，那么优先选择上次方向相同的点。如果只有一个点，那么只能强制选为下一个点，并且方向要改变。这样做后还是只能稍微改善下，不能完全解决，原因是分数小的点就是A星的核心，分数只要不一样就会一直改变方向
-验证改善后：
-结论如果一直强制一个方向也不是不可以，但会有下面两个问题：
-
-强制不用A*算出的点，还能找到终点吗
-这样会增加寻路复杂度感觉第一步就是强制设置为h函数的分数为0，那么永远在4个方向...
+猜想...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -390,11 +385,7 @@ A* 则是曲曲折折
                 <span>ksum问题</span>
         </a>
         <div class="abstract-content">
-            问题1234567Given array nums = [-1, 0, 1, 2, -1, -4],    A solution set is:  [  [-1, 0, 1],  [-1, -1, 2]  ]
-解决方案此前还有2sum问题，那么可以把这个问题扩展为k-sum对于找出3个数，我们可以先固定一个数，在剩下的数里面去找到两个，那么复杂度就是n^2，这太高了，有没有可能不用暴力解决。答案是肯定的，因为最终的和是知道的，那么我们固定了一个数，就可以根据其他两个数来判断是如何移动，达到线性搜索。前提是排好序
-同理 4sum可以固定两个数，再去找剩余的两个数…
-代码
-
+            问题1234567Given array nums = [-1, 0, 1, 2, -1, -4],    A solution set is:  [  ...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -423,9 +414,7 @@ A* 则是曲曲折折
                 <span>erlang gb_tree平衡树做排行</span>
         </a>
         <div class="abstract-content">
-            介绍平衡树简称AVL，出名的有红黑树，这里介绍一下erlang中gb_tree的实现gb_tree的原理比红黑树简单，没有过多的旋转跳跃闭着眼，是一种叫AA树的结构（Arne Andersson’s General Balanced Trees），有兴趣看这篇论文：传送门
-结构{Size, Tree}是整个结构体，Tree的定义又是{Key, Value, Smaller, Bigger} | nil初始化直接返回{0, nil}
-插入123insert(Key, Val, &#123;S, T&#125;) when is_integer(S) -&gt;      S1 = S+1,...
+            介绍平衡树简称AVL，出名的有红黑树，这里介绍一下erlang中gb_tree的实现gb_tree的原理比红黑树简单，没有过多的旋转跳跃闭着眼，是一种叫A...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
