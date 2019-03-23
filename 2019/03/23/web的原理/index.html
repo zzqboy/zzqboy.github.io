@@ -191,7 +191,7 @@
 </ol>
 <p>这一切看来非常像游戏中一条协议的处理，下面详细讲这几个</p>
 <h2 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h2><p>http的请求的本质是tcp，自然会先建立tcp连接，那么server会在接受连接后，等待报文的到达。</p>
-<h2 id="报文"><a href="#报文" class="headerlink" title="报文"></a>报文</h2><p>http报文达到后，就会按照下面的形式开始处理<br><img src="http.png" alt="http.png"><br>由图可知，当数据没有接受完是不能进行解析报文的。 每行的CRLF和Content-length就是用来判断是否接受完</p>
+<h2 id="报文"><a href="#报文" class="headerlink" title="报文"></a>报文</h2><p>解析报文的过程：<br><img src="/img/http.png" alt="http.png"><br>由图可知，当数据没有接受完是不能进行解析报文的。 每行的CRLF和Content-length就是用来判断是否接受完</p>
 <h2 id="处理"><a href="#处理" class="headerlink" title="处理"></a>处理</h2><p>在解析报文后，就知道浏览器想让server干嘛了，就可以对应做出各种响应。<br>(GET、POST、PUT、Delete、HEAD、Options)</p>
 <h2 id="响应报文"><a href="#响应报文" class="headerlink" title="响应报文"></a>响应报文</h2><p>通常包括:(主要还是看协议)</p>
 <ol>
@@ -199,7 +199,7 @@
 <li>Content-Length</li>
 <li>主体内容</li>
 </ol>
-<p>MIME的类型<br><img src="http2.png" alt="http2.png"></p>
+<p>MIME的类型<br><img src="/img/http2.png" alt="http2.png"></p>
 <p>不过也有可能是重定向的响应，响应码为3XX，不是最终的响应</p>
 <h2 id="发送"><a href="#发送" class="headerlink" title="发送"></a>发送</h2><p>server在发送完报文后，会关闭非持久的连接，对于持久连接是不会关闭的。</p>
 <h1 id="echo-server"><a href="#echo-server" class="headerlink" title="echo server"></a>echo server</h1><p>文中有个perl的echo server，这里用python重现</p>
