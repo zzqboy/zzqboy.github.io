@@ -26,6 +26,8 @@
   
 
   
+    <script src="//unpkg.com/valine/dist/Valine.min.js" async></script>
+  
 
   
 
@@ -34,7 +36,7 @@
   // it can be used in every script
   
   window.AD_CONFIG = {
-    leancloud: {"appid":null,"appkey":null,"comment":false,"count":false},
+    leancloud: {"appid":"Rnkw0hozhTef2hkJROGWiLLE-gzGzoHsz","appkey":"DnDNnz9p90PqjoKWMAUKCqz4","comment":true,"count":true},
     welcome: {"enable":false,"interval":30},
     start_time: "2019-01-01",
     passwords: [],
@@ -190,7 +192,9 @@
           
             <div class="passage-tags">
              
-              <a href="/tags/thread-mysql/"><i class="fa fa-tags"></i>thread, mysql</a>
+              <a href="/tags/thread/"><i class="fa fa-tags"></i>thread</a>
+             
+              <a href="/tags/mysql/"><i class="fa fa-tags"></i>mysql</a>
             
             </div>
           
@@ -426,6 +430,10 @@
       <i class="fa fa-clock-o"></i> 本站已稳定运行<span id="site-time"></span>
     </div>
     
+      <div class="site-footer-info">
+        <i class="fa fa-paw"></i> 您是本站第 <span id="site-count"></span> 位访客
+      </div>
+    
     
       <div class="site-footer-info">
         <i class="fa fa-at"></i> Email: ziquanzheng@foxmail.com
@@ -486,6 +494,10 @@
     <a href="javascript:void(0);" data-enable="false" id="site-toc-show-btn">
       <i class="fa fa-bars"></i>
     </a>
+    
+      <a href="javascript:void(0);" data-enable="false">
+        <i class="fa fa-commenting"></i>
+      </a>
     
     <a href="javascript:void(0);" id="site-toggle-share-btn">
       <i class="fa fa-share-alt"></i>
