@@ -36,7 +36,7 @@
   // it can be used in every script
   
   window.AD_CONFIG = {
-    leancloud: {"appid":"Rnkw0hozhTef2hkJROGWiLLE-gzGzoHsz","appkey":"DnDNnz9p90PqjoKWMAUKCqz4","comment":true,"count":true},
+    leancloud: {"appid":"Rnkw0hozhTef2hkJROGWiLLE-gzGzoHsz","appkey":"DnDNnz9p90PqjoKWMAUKCqz4","comment":true,"count":false},
     welcome: {"enable":false,"interval":30},
     start_time: "2019-01-01",
     passwords: [],
@@ -254,10 +254,6 @@
       <i class="fa fa-clock-o"></i> 本站已稳定运行<span id="site-time"></span>
     </div>
     
-      <div class="site-footer-info">
-        <i class="fa fa-paw"></i> 您是本站第 <span id="site-count"></span> 位访客
-      </div>
-    
     
       <div class="site-footer-info">
         <i class="fa fa-at"></i> Email: ziquanzheng@foxmail.com
@@ -363,6 +359,21 @@
 </div>
     
 
+
+  <script async>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+  </script>
 
 
 
