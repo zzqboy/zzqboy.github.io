@@ -6,16 +6,16 @@
   <meta name="author" content="zzqboy">
   
   
-  <title>标签: leetcode | zzqboy</title>
+  <title>多线程与数据库 | zzqboy</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="zzqboy">
+    <meta name="keywords" content="algorithm,leetcode,">
   
 
   
-  <meta name="description" content="zzq的小站">
+  <meta name="description" content="日常做题">
 
   
 
@@ -40,7 +40,7 @@
     welcome: {"enable":false,"interval":30},
     start_time: "2019-01-01",
     passwords: [],
-    is_post: false,
+    is_post: true,
     lock: false,
     author: "zzqboy",
     share: {"twitter":true,"facebook":true,"weibo":true,"qq":true,"wechat":true},
@@ -150,33 +150,82 @@
 </nav>
 <div id="site-process"></div>
     <main>
-      <div class="timeline">
-  <h2 class="timeline-title">标签: leetcode</h2>
+      
+  <div class="passage">
+  <div class="passage-meta">
+    <span>
+      <i class="fa fa-calendar"></i>2019-05-26
+    </span>
+    
+      <span>
+        | <a href="/categories/algorithm/"><i class="fa fa-bookmark"></i>algorithm</a>
+      </span>
+    
+    
+      <span>
+        | <i class="fa fa-unlock-alt"></i>UNLOCK
+      </span>
+    
+  </div>
+  <h1 class="passage-title">
+    多线程与数据库
+  </h1>
   
-    
-      <h3 class="timeline-subtitle">2019</h3>
-    
-    <div class="timeline-item">
-      <time>2019-05-26</time>
-      <a target="_self" href="/2019/05/26/数独解决/">多线程与数据库</a>
+    <div class="passage-cover">
+      <figure style="background-image:url(/img/sudu2.png);"></figure>
     </div>
   
-    
-    <div class="timeline-item">
-      <time>2019-05-08</time>
-      <a target="_self" href="/2019/05/08/计算最长有效子串/">计算最长有效子串</a>
-    </div>
+  <article class="passage-article">
+    <h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>求解9*9的速独的解决方法，之前已经有了一道判断速独有效性的题目，两道题有一定的关联性</p>
+<p>1.用递归来填每个格子<br>2.然后进行一次有效性的判断<br>3.如果不是有效的那么这个格子需要填下一个数字，否则进行下个格子的填写。</p>
+<p>因为这道题本身有一定的趣味，故在这里进行解速独的打印<br>可以在 <a href="https://github.com/zzqboy/leetcode/blob/master/LeetCode/037.h" target="_blank" rel="noopener">代码</a> 34行进行调节速度观看过程</p>
+<p>附图：</p>
+<p><img src="/img/sudu1.png" alt="/img/sudu1.png"></p>
+
+  </article>
+  <aside class="table-content" id="site-toc">
+  <div class="table-content-title">
+    <i class="fa fa-arrow-right fa-lg" id="site-toc-hide-btn"></i>
+    <span>目录</span>
+  </div>
+  <div class="table-content-main">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#问题"><span class="toc-text">问题</span></a></li></ol>
+  </div>
+</aside>
   
+    <aside class="passage-copyright">
+      <div>本文作者: zzqboy</div>
+      
+        <div>
+          原文链接: 
+          <a href="" target="_blank">http://zzqboy.github.io/2019/05/26/数独解决/</a>
+        </div>
+      
+      <div>
+        版权声明: 本博客所有文章除特别声明外, 均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议. 转载请注明出处!
+      </div>
+    </aside>
+  
+  
+    <div class="passage-tags">
+     
+      <a href="/tags/leetcode/"><i class="fa fa-tags"></i>leetcode</a>
     
-      <h3 class="timeline-subtitle">2018</h3>
-    
-    <div class="timeline-item">
-      <time>2018-06-09</time>
-      <a target="_self" href="/2018/06/09/ksum问题/">ksum问题</a>
     </div>
   
 </div>
+
     </main>
+    
+      
+<div class="site-comment-contanier" data-plateform="leancloud">
+  
+    <p id="site-comment-info">
+      <i class="fa fa-spinner fa-spin"></i> 评论加载中
+    </p>
+    <div id="site-comment"></div>
+  
+</div>
     
     <div class="site-footer-wrapper">
   <footer class="site-footer">
@@ -246,16 +295,16 @@
     <a href="javascript:void(0);" data-enable="false">
       <i class="fa fa-arrow-left"></i>
     </a>
-    <a href="javascript:void(0);" data-enable="false">
+    <a href="/2019/05/08/计算最长有效子串/" data-enable="true">
       <i class="fa fa-arrow-right"></i>
     </a>
   </div>
   <div class="bottom-bar-right">
-    <a href="javascript:void(0);" data-enable="false" id="site-toc-show-btn">
+    <a href="javascript:void(0);" data-enable="true" id="site-toc-show-btn">
       <i class="fa fa-bars"></i>
     </a>
     
-      <a href="javascript:void(0);" data-enable="false">
+      <a href="#site-comment" data-enable="true">
         <i class="fa fa-commenting"></i>
       </a>
     
