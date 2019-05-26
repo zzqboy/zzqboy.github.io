@@ -175,23 +175,15 @@
     <p></p>
 <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>本文用的是c++11的thread库，但是大多数的库用起来的差不多，能达到目的就可以。数据库用的mysql，并且是自带的c++api。<br>源码在这里：<a href="https://github.com/zzqboy/rpg/blob/master/rpg/rpg/db_work.h" target="_blank" rel="noopener">数据库</a><br>以及测试代码：<a href="https://github.com/zzqboy/rpg/blob/master/rpg/rpg/test_db.cpp" target="_blank" rel="noopener">测试</a></p>
 <h1 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h1><p>遵循了大部分的设计，即有一个工作队列，然后一开始设置好线程数，然后这几个线程就以队列为核心开始工作。</p>
-<p>在增加任务的时候，也支持增加自定义的参数，这里用到是std::bind的特性。大概是这样用的<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> fun = <span class="built_in">std</span>::bind(test_db::task_fun, placeholders::_1, is_sleep);</span><br><span class="line"><span class="keyword">this</span>-&gt;db_work-&gt;add_task(fun);</span><br></pre></td></tr></table></figure></p>
+<p>在增加任务的时候，也支持增加自定义的参数，这里用到是std::bind的特性。大概是这样用的<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> fun = <span class="built_in">std</span>::bind(test_db::task_fun, placeholders::_1);</span><br><span class="line"><span class="keyword">this</span>-&gt;db_work-&gt;add_task(fun);</span><br></pre></td></tr></table></figure></p>
 <p>只要最后的test_db::task_fun符合声明，那么这里可以像脚本一样传入不定长的参数。</p>
-<p>再来看看task_fun:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> test_db::task_fun(DBWork* db_work, <span class="keyword">bool</span> is_sleep)</span><br><span class="line">&#123;</span><br><span class="line">	DataBase* db = db_work-&gt;get_database(<span class="string">"rpg"</span>);</span><br><span class="line">	<span class="keyword">int</span> col_n = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">char</span>** row;</span><br><span class="line">	DATA_RESULT result = <span class="literal">NULL</span>;</span><br><span class="line">	db-&gt;execute(<span class="string">"select * from role;"</span>, col_n, result);</span><br><span class="line">	<span class="keyword">while</span> (row = GET_RESULT_ROW(result))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//printf("%s\n", row[0]);</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (is_sleep)</span><br><span class="line">	&#123;</span><br><span class="line">		Sleep(<span class="number">10</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这其实就是一个有待多线程去执行的函数，通过唯一参数db_work来执行数据库的操作，sleep是模仿了执行数据库命令后的其余逻辑。<br>如果说前者是io密集，那么后者就是cpu密集。看来这里的设计变成了一个综合的问题。<br>下面的是单线程的版本:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> test_db::test(<span class="keyword">bool</span> is_sleep)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> col_n = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">char</span>** row;</span><br><span class="line">	DATA_RESULT result = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">this</span>-&gt;db-&gt;execute(<span class="string">"select * from role;"</span>, col_n, result);</span><br><span class="line">	<span class="keyword">while</span> (row = GET_RESULT_ROW(result))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//printf("%s\n", row[0]);</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (is_sleep)</span><br><span class="line">	&#123;</span><br><span class="line">		Sleep(<span class="number">10</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h1 id="效率"><a href="#效率" class="headerlink" title="效率"></a>效率</h1><p>那么这样一个设计到时是改善了多少呢，这需要测试数据。<br>这里分为有无sleep，也就是探究：单一执行mysql命令，多线程对数据库有帮助否，还是说数据库在io密集上不存在问题</p>
-<p>参数说明：</p>
-<ol>
-<li>sleep:是否增加延时</li>
-<li>multi-thread:是否多线程</li>
-<li>count:次数</li>
-<li>time:结果<br>(ps:线程数都是12，和cpu核心一样)</li>
-</ol>
+<p>再来看看task_fun:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> test_db::task_fun(DBWork* db_work)</span><br><span class="line">&#123;</span><br><span class="line">	DataBase* db = db_work-&gt;get_database(<span class="string">"rpg"</span>);</span><br><span class="line">	<span class="keyword">int</span> col_n = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">char</span>** row;</span><br><span class="line">	DATA_RESULT result = <span class="literal">NULL</span>;</span><br><span class="line">	db-&gt;execute(<span class="string">"select * from role where role_id = 500;"</span>, col_n, result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这其实就是一个有待多线程去执行的函数，通过唯一参数db_work来执行数据库的操作，sleep是模仿了执行数据库命令后的其余逻辑。<br>如果说前者是io密集，那么后者就是cpu密集。看来这里的设计变成了一个综合的问题。<br>下面的是单线程的版本:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> test_db::test()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> col_n = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">char</span>** row;</span><br><span class="line">	DATA_RESULT result = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">this</span>-&gt;db-&gt;execute(<span class="string">"select * from role where role_id = 500;"</span>, col_n, result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="效率"><a href="#效率" class="headerlink" title="效率"></a>效率</h1><p>那么这样一个设计到时是改善了多少呢，这需要测试数据，这里是插入了10000条数据。</p>
 <table>
 <thead>
 <tr>
 <th>编号</th>
-<th>sleep</th>
 <th>multi-thread</th>
 <th>count</th>
 <th>time(毫秒)</th>
@@ -200,91 +192,31 @@
 <tbody>
 <tr>
 <td>1</td>
-<td>yes</td>
-<td>yes</td>
+<td>no</td>
 <td>100</td>
-<td>89</td>
+<td>35</td>
 </tr>
 <tr>
 <td>2</td>
-<td>yes</td>
-<td>yes</td>
+<td>no</td>
 <td>1000</td>
-<td>914</td>
+<td>217</td>
 </tr>
 <tr>
 <td>3</td>
 <td>yes</td>
-<td>yes</td>
-<td>5000</td>
-<td>4572</td>
+<td>100</td>
+<td>17</td>
 </tr>
 <tr>
 <td>4</td>
 <td>yes</td>
-<td>no</td>
-<td>100</td>
-<td>1010</td>
-</tr>
-<tr>
-<td>5</td>
-<td>yes</td>
-<td>no</td>
 <td>1000</td>
-<td>11003</td>
-</tr>
-<tr>
-<td>6</td>
-<td>yes</td>
-<td>no</td>
-<td>5000</td>
-<td>55041</td>
-</tr>
-<tr>
-<td>7</td>
-<td>no</td>
-<td>no</td>
-<td>100</td>
-<td>25</td>
-</tr>
-<tr>
-<td>8</td>
-<td>no</td>
-<td>no</td>
-<td>1000</td>
-<td>273</td>
-</tr>
-<tr>
-<td>9</td>
-<td>no</td>
-<td>no</td>
-<td>5000</td>
-<td>1382</td>
-</tr>
-<tr>
-<td>10</td>
-<td>no</td>
-<td>no</td>
-<td>100</td>
-<td>33</td>
-</tr>
-<tr>
-<td>11</td>
-<td>no</td>
-<td>no</td>
-<td>1000</td>
-<td>293</td>
-</tr>
-<tr>
-<td>12</td>
-<td>no</td>
-<td>no</td>
-<td>5000</td>
-<td>1459</td>
+<td>190</td>
 </tr>
 </tbody>
 </table>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>可以看到，当数据库的命令和上面一样简单的时候，多线程和单线程对于数据库部分的效率差不多。<br>但是如果命令比较复杂，并且数据库设计不合理等原因导致数据库执行比较慢，达到sleep的效果的话就会增加效率。<br>PS:（一句话，也就是看mysql语句的执行效率，也说明这种设计起码不会降低效率）</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>可以看到，如果数据过多，数据库设计不合理等原因导致数据库执行比较慢，这样确实能提高性能。</p>
   </article>
   <aside class="table-content" id="site-toc">
   <div class="table-content-title">
